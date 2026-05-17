@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girum Asres — Software Engineering Student</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --ink: #0d0d0d;
+            --ink-soft: #3a3a3a;
+            --ink-mute: #888;
+            --paper: #f5f2eb;
+            --paper-2: #ede9e0;
+            --accent: #1a1a2e;
+            --accent-warm: #c8602a;
+            --accent-teal: #1d7a6e;
+            --accent-gold: #d4a017;
+            --border: rgba(0, 0, 0, 0.1);
+            --card-bg: #fff;
+            --radius: 4px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        /* ── NOISE TEXTURE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(245, 242, 235, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--accent-warm);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink-soft);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: var(--ink);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding-top: 5rem;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            padding: 6rem 3rem 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 1px;
+            background: var(--accent-warm);
+        }
+
+        .hero-name {
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-name .first {
+            display: block;
+        }
+
+        .hero-name .last {
+            display: block;
+            -webkit-text-stroke: 2px var(--ink);
+            color: transparent;
+        }
+
+        .hero-role {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--ink-soft);
+            margin: 1.5rem 0 2.5rem;
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--ink-soft);
+            line-height: 1.75;
+            max-width: 42ch;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.875rem 2rem;
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            border: 2px solid var(--ink);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--ink);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            color: var(--ink);
+            padding: 0.875rem 2rem;
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 2px solid var(--ink);
+            transition: all 0.25s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .hero-right {
+            position: relative;
+            background: var(--accent);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 60px,
+                    rgba(255, 255, 255, 0.02) 60px,
+                    rgba(255, 255, 255, 0.02) 61px);
+        }
+
+        .hero-avatar-wrap {
+            position: relative;
+            z-index: 2;
+            width: 320px;
+            height: 320px;
+        }
+
+        .hero-avatar-ring {
+            position: absolute;
+            inset: -16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: spin-slow 20s linear infinite;
+        }
+
+        .hero-avatar-ring-2 {
+            position: absolute;
+            inset: -32px;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: spin-slow 30s linear infinite reverse;
+        }
+
+        .hero-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c8602a 0%, #d4a017 50%, #1d7a6e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.05em;
+            box-shadow: 0 0 80px rgba(200, 96, 42, 0.3);
+        }
+
+        .hero-floating-tag {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .tag-flutter {
+            top: 18%;
+            left: 8%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .tag-js {
+            top: 12%;
+            right: 10%;
+            animation: float 4.5s ease-in-out infinite 0.5s;
+        }
+
+        .tag-css {
+            bottom: 22%;
+            left: 6%;
+            animation: float 5s ease-in-out infinite 1s;
+        }
+
+        .tag-html {
+            bottom: 15%;
+            right: 8%;
+            animation: float 4.2s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── SECTION BASE ── */
+        section {
+            padding: 6rem 3rem;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            max-width: 60px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        /* ── ABOUT ── */
+        .about {
+            background: var(--paper-2);
+        }
+
+        .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-stat-row {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about-stat .num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-warm);
+            line-height: 1;
+        }
+
+        .about-stat .label {
+            font-size: 0.8rem;
+            color: var(--ink-mute);
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+
+        /* ── SKILLS ── */
+        .skills {
+            background: var(--paper);
+        }
+
+        .skills-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .skill-card.flutter::before {
+            background: var(--accent-teal);
+        }
+
+        .skill-card.js::before {
+            background: var(--accent-gold);
+        }
+
+        .skill-card.html::before {
+            background: var(--accent-warm);
+        }
+
+        .skill-card.css::before {
+            background: #6c63ff;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .skill-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-level-bar {
+            height: 4px;
+            background: var(--paper-2);
+            border-radius: 2px;
+            margin: 1rem 0 0.5rem;
+            overflow: hidden;
+        }
+
+        .skill-level-fill {
+            height: 100%;
+            border-radius: 2px;
+            animation: grow 1.5s ease-out forwards;
+            transform-origin: left;
+        }
+
+        .skill-card.flutter .skill-level-fill {
+            background: var(--accent-teal);
+        }
+
+        .skill-card.js .skill-level-fill {
+            background: var(--accent-gold);
+        }
+
+        .skill-card.html .skill-level-fill {
+            background: var(--accent-warm);
+        }
+
+        .skill-card.css .skill-level-fill {
+            background: #6c63ff;
+        }
+
+        @keyframes grow {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .skill-pct {
+            font-size: 0.75rem;
+            color: var(--ink-mute);
+            font-weight: 500;
+        }
+
+        /* ── PROJECTS ── */
+        .projects {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .projects .section-label {
+            color: var(--accent-gold);
+        }
+
+        .projects .section-title {
+            color: #fff;
+        }
+
+        .projects-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .project-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.07);
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            line-height: 1;
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .project-desc {
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .project-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .project-feature {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .feature-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .project-links {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-links a {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: 0.25s;
+        }
+
+        .project-links a:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ── CONTACT ── */
+        .contact {
+            background: var(--paper-2);
+        }
+
+        .contact-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+       .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust spacing between icon and text */
+    margin-bottom: 12px;
+}
+
+        .contact-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--ink-mute);
+        }
+
+        .form-input,
+        .form-textarea {
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            padding: 0.875rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--ink);
+            outline: none;
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--accent-warm);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--ink);
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        footer span {
+            color: var(--accent-warm);
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .hero-left {
+                padding: 7rem 1.5rem 3rem;
+            }
+
+            .hero-right {
+                min-height: 380px;
+            }
+
+            .about-inner,
+            .projects-grid,
+            .contact-inner {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-logo">G<span>.</span>Asres</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-left">
+            
+            <h1 class="hero-name">
+                <span class="first">Girum</span>
+                <span class="last">Asres</span>
+            </h1>
+            <p class="hero-role">Software Engineering Student</p>
+            <p class="hero-desc">
+                Building mobile experiences with Flutter and crafting web interfaces with JavaScript, HTML & CSS.
+                Currently learning, growing, and shipping real projects.
+            </p>
+
+            <div class="hero-cta">
+                <a href="#projects" class="btn-primary">View Projects</a>
+                <a href="#contact" class="btn-secondary">Get in Touch</a>
+               
+                <a href="https://github.com/YOUR_GITHUB" class="btn-secondary" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/YOUR_LINKEDIN" class="btn-secondary" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-floating-tag tag-flutter">Flutter</div>
+            <div class="hero-floating-tag tag-js">JavaScript</div>
+    
+            
+
+            <div class="hero-avatar-wrap">
+                <div class="hero-avatar-ring"></div>
+                <div class="hero-avatar-ring-2"><img style="width: 400px;height: 400px;border-radius: 200px;" src="logo.jpg" alt="logo"></div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <div class="reveal">
+                <div class="section-label">About Me</div>
+                <h2 class="section-title">Turning ideas into<br>real applications</h2>
+            </div>
+
+            <div class="reveal">
+                <p style="color: var(--ink-soft); line-height: 1.9; font-size: 1.05rem; margin-bottom: 1.5rem;">
+                    I'm Girum Asres, a passionate software engineering student on a mission to master mobile and web
+                    development. I love building tools that genuinely help people — from managing daily tasks to
+                    AI-powered productivity apps.
+                </p>
+
+                <p style="color: var(--ink-soft); line-height: 1.9; font-size: 1.05rem;">
+                    Every project I build is a step forward. I believe in learning by doing, and I'm constantly pushing
+                    my skills in Flutter, JavaScript, and modern web technologies.
+                </p>
+
+                <div class="about-stat-row">
+                    <div class="about-stat">
+                        <div class="num">2+</div>
+                        <div class="label">Projects Built</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="num">3+</div>
+                        <div class="label">Technologies</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="num">∞</div>
+                        <div class="label">Things to Learn</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills" id="skills">
+        <div class="skills-inner">
+            <div class="reveal" style="max-width: 500px;">
+                <div class="section-label">Technologies</div>
+                <h2 class="section-title">My skill set</h2>
+                <p style="color: var(--ink-mute); margin-top: 0.75rem; line-height: 1.7;">
+                    Building a strong foundation across mobile and web development. Beginner level, serious commitment.
+                </p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card flutter reveal">
+                    <span class="skill-icon">🐦</span>
+                    <div class="skill-name">Flutter</div>
+                    <p style="font-size: 0.85rem; color: var(--ink-mute); line-height: 1.6;">
+                        Cross-platform mobile app development with Dart. Building beautiful, natively compiled apps.
+                    </p>
+                    <div class="skill-level-bar">
+                        <div class="skill-level-fill" style="width: 50%"></div>
+                    </div>
+                    <span class="skill-pct">Beginner · Growing</span>
+                </div>
+
+                <div class="skill-card js reveal">
+                    <span class="skill-icon">⚡</span>
+                    <div class="skill-name">JavaScript</div>
+                    <p style="font-size: 0.85rem; color: var(--ink-mute); line-height: 1.6;">
+                        The language of the web. Building dynamic, interactive experiences and logic-driven
+                        applications.
+                    </p>
+                    <div class="skill-level-bar">
+                        <div class="skill-level-fill" style="width: 50%"></div>
+                    </div>
+                    <span class="skill-pct">Beginner · Growing</span>
+                </div>
+
+               
+
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+        <div class="projects-inner">
+            <div class="reveal">
+                <div class="section-label">Work</div>
+                <h2 class="section-title">Featured projects</h2>
+            </div>
+
+            <div class="projects-grid">
+
+                <div class="project-card reveal">
+                    <span class="project-num">01</span>
+                    <div class="project-icon">✅</div>
+                    <h3 class="project-title">To-Do List & Task Management</h3>
+                    <p class="project-desc">
+                        A clean, intuitive mobile application that helps users organize their daily tasks and boost
+                        productivity. 
+                    </p>
+
+                    <div class="project-feature">
+                        <div class="feature-item"><span class="feature-dot"></span> Create, edit, delete tasks</div>
+                        <div class="feature-item"><span class="feature-dot"></span> Organize tasks by priority</div>
+                        <div class="feature-item"><span class="feature-dot"></span> Clean UI design</div>
+                        
+                    </div>
+
+                    <div class="project-tags">
+                        <span class="project-tag">Flutter</span>
+                        <span class="project-tag">Dart</span>
+                        
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://github.com/GIRUMASRES1234/To-Do-List-with-AI" target="_top">GitHub</a>
+                       
+                    </div>
+                </div>
+
+                <div class="project-card reveal">
+                    <span class="project-num">02</span>
+                    <div class="project-icon">🤖</div>
+                    <h3 class="project-title">Notebook App with AI summarization</h3>
+                    <p class="project-desc">
+                        A smart note-taking app with AI features with summarization
+                    </p>
+
+                    <div class="project-feature">
+                        <div class="feature-item"><span class="feature-dot"></span> AI-powered note summarization</div>
+                       
+                    </div>
+
+                    <div class="project-tags">
+                        <span class="project-tag">Flutter</span>
+                       
+                        <span class="project-tag">Firebase</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://github.com/GIRUMASRES1234/Notebook-with-AI" target="_top">GitHub</a>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-inner">
+
+            <div class="reveal">
+                <div class="section-label">Contact</div>
+                <h2 class="section-title">Let's build<br>something together</h2>
+
+                <p
+                    style="color: var(--ink-soft); line-height: 1.8; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 2.5rem;">
+                    I'm always open to new opportunities, collaborations, and interesting conversations about software
+                    development. Whether you have a project in mind or just want to connect — reach out!
+                </p>
+
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📧</div>
+                        <span><b>Email:</b> asresgirum59@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📍</div>
+                        <span><b>Location:</b> Ethiopia</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">🎓</div>
+                        <span><b>Status:</b> Software Engineering Student</span>
+                    </div>
+                    <div class="contact-item">
+                        <!-- Fixed class name and changed icon to match Telegram -->
+                        <div class="contact-item-icon">💬</div>
+                        <span><b>Telegram Username:</b> @Girax12</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORM WITH FORMSPREE -->
+            <div class="reveal">
+                <form class="contact-form" action="https://formspree.io/f/xojbardq" method="POST"
+                    onsubmit="handleSubmit(event)">
+
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input class="form-input" type="text" name="name" placeholder="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input class="form-input" type="email" name="email" placeholder="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-textarea" name="message"
+                            placeholder="If you want to work with me " required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary"
+                        style="width: fit-content; cursor: pointer; font-family: 'Syne', sans-serif;">
+                        Send Message
+                    </button>
+
+                    <div id="form-success"
+                        style="display:none; color: var(--accent-teal); font-size: 0.9rem; font-weight: 500;">
+                        ✓ Message sent! I'll get back to you soon.
+                    </div>
+
+                    <div id="form-error" style="display:none; color: crimson; font-size: 0.9rem; font-weight: 500;">
+                        ❌ Something went wrong. Please try again.
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Designed & built by <span>Girum Asres</span> · Software Engineering Student · 2026</p>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(el => observer.observe(el));
+
+        // Staggered skill card reveals
+        document.querySelectorAll('.skill-card').forEach((card, i) => {
+            card.style.transitionDelay = (i * 0.1) + 's';
+        });
+
+        // Smooth nav scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // FORMSPREE AJAX SUBMIT
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                document.getElementById("form-success").style.display = "block";
+                document.getElementById("form-error").style.display = "none";
+                form.reset();
+
+                setTimeout(() => {
+                    document.getElementById("form-success").style.display = "none";
+                }, 4000);
+            } else {
+                document.getElementById("form-error").style.display = "block";
+                document.getElementById("form-success").style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
